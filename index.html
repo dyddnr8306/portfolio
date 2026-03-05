@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>신용욱 (Shin Yong Yuk) — IPS Engineer</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  background: #f0f3f8;
+  color: #1c2b3a;
+  font-family: 'Malgun Gothic', '맑은 고딕', AppleGothic, sans-serif;
+  font-size: 14px;
+  line-height: 1.75;
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 0 48px; height:52px;
+  background: rgba(255,255,255,0.98);
+  border-bottom: 2px solid #1a5fd4;
+  box-shadow: 0 2px 12px rgba(26,95,212,0.08);
+}
+.nav-id {
+  font-size:12px; font-weight:700;
+  color:#1a5fd4; letter-spacing:1px;
+}
+.nav-links { display:flex; gap:28px; list-style:none; }
+.nav-links a {
+  color:#8a9eb8; text-decoration:none;
+  font-size:11px; letter-spacing:0.5px;
+  transition:color 0.2s;
+}
+.nav-links a:hover { color:#1a5fd4; }
+
+section { position:relative; }
+.wrap { max-width:960px; margin:0 auto; padding:0 48px; }
+
+/* ── HERO ── */
+.hero {
+  padding: 100px 0 72px;
+  background: linear-gradient(135deg, #ffffff 0%, #f5f8ff 100%);
+  border-bottom: 1px solid #dde3ec;
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 480px; height: 100%;
+  background: linear-gradient(135deg, transparent 40%, rgba(26,95,212,0.04) 100%);
+  pointer-events: none;
+}
+.hero-inner {
+  display:grid; grid-template-columns: 1fr 230px;
+  gap:52px; align-items:start; position:relative; z-index:1;
+}
+.hero-eyebrow {
+  font-size:11px; font-weight:700; color:#1a5fd4;
+  letter-spacing:3px; text-transform:uppercase;
+  margin-bottom:18px; display:flex; align-items:center; gap:10px;
+}
+.hero-eyebrow::before { content:''; width:28px; height:2px; background:#1a5fd4; border-radius:1px; }
+.hero-name {
+  font-size: clamp(38px, 4.8vw, 62px);
+  font-weight:700; line-height:1.08;
+  color:#0d1c2e; margin-bottom:4px; letter-spacing:-0.5px;
+}
+.hero-name em { font-style:normal; color:#1a5fd4; }
+.hero-name-en {
+  font-size:11px; font-weight:700; color:#b0c4dc;
+  letter-spacing:3px; margin-bottom:18px; display:block;
+  text-transform:uppercase;
+}
+.hero-role {
+  font-size:13px; color:#6a8099; font-weight:400;
+  margin-bottom:28px;
+  display:flex; align-items:center; gap:8px;
+}
+.hero-role::before { content:''; width:18px; height:1px; background:#c0cfe0; }
+.hero-tagline {
+  font-size:14px; font-weight:500; color:#2c3e55; line-height:1.8;
+  border-left:4px solid #1a5fd4;
+  padding: 16px 20px;
+  background: #eef4ff;
+  border-radius: 0 8px 8px 0;
+  margin-bottom:28px;
+  box-shadow: inset 0 0 0 1px rgba(26,95,212,0.08);
+}
+.hero-contact { display:flex; gap:8px; flex-wrap:wrap; }
+.chip {
+  font-size:11px; color:#4a6280;
+  border:1px solid #c4d2e6;
+  border-radius:20px; padding:5px 13px;
+  background:#fff;
+  transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.chip:hover { border-color:#1a5fd4; color:#1a5fd4; background:#eef4ff; }
+
+/* stat cards */
+.hero-stats { display:flex; flex-direction:column; gap:10px; padding-top:4px; }
+.stat-card {
+  background:#fff;
+  border:1px solid #dde3ec;
+  border-radius:10px; padding:18px 20px;
+  box-shadow: 0 2px 8px rgba(26,95,212,0.07);
+  position:relative; overflow:hidden;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.stat-card:hover { box-shadow: 0 4px 16px rgba(26,95,212,0.13); transform:translateY(-1px); }
+.stat-card::before {
+  content:''; position:absolute;
+  top:0; left:0; width:4px; height:100%;
+  background: linear-gradient(180deg, #1a5fd4, #4a8ff0);
+}
+.stat-num {
+  font-size:30px; font-weight:700; color:#1a5fd4; line-height:1;
+  padding-left:4px;
+}
+.stat-label { font-size:10px; color:#8aa0ba; margin-top:5px; line-height:1.5; padding-left:4px; }
+
+/* ── SECTION WRAP ── */
+.sec-wrap { padding:64px 0; }
+.sec-wrap.gray  { background:#f0f3f8; }
+.sec-wrap.white { background:#fff; border-top:1px solid #e4eaf3; border-bottom:1px solid #e4eaf3; }
+
+.sec-header { display:flex; align-items:center; gap:14px; margin-bottom:32px; }
+.sec-num { font-size:11px; font-weight:700; color:#1a5fd4; letter-spacing:1px; }
+.sec-title { font-size:17px; font-weight:700; color:#0d1c2e; }
+.sec-line { flex:1; height:1px; background: linear-gradient(to right, #c4d2e6, transparent); }
+.sec-hint { font-size:11px; color:#9aafca; font-weight:400; margin-left:4px; }
+
+/* ── APPROACH ── */
+.approach-grid {
+  display:grid; grid-template-columns:repeat(4, 1fr);
+  border:1px solid #dde3ec; border-radius:10px; overflow:hidden;
+  background:#e4eaf3; gap:1px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.approach-card {
+  background:#fff; padding:26px 22px;
+  transition: background 0.15s;
+  position:relative;
+}
+.approach-card::after {
+  content:''; position:absolute;
+  bottom:0; left:22px; right:22px;
+  height:2px; background:#1a5fd4;
+  transform: scaleX(0); transition: transform 0.2s;
+  border-radius:2px;
+}
+.approach-card:hover { background:#f4f8ff; }
+.approach-card:hover::after { transform: scaleX(1); }
+.approach-step {
+  font-size:10px; font-weight:700; color:#1a5fd4;
+  letter-spacing:1.5px; margin-bottom:10px;
+  text-transform:uppercase;
+}
+.approach-name { font-size:13px; font-weight:700; color:#1c2b3a; margin-bottom:8px; }
+.approach-desc { font-size:11px; color:#7a8fa8; line-height:1.65; }
+
+/* ── PROJECTS ── */
+.project-list { display:flex; flex-direction:column; gap:6px; }
+.project-item {
+  border:1px solid #dde3ec;
+  border-radius:10px; overflow:hidden;
+  background:#fff;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  cursor:pointer;
+  user-select:none;
+}
+.project-item:hover {
+  border-color:#9abde6;
+  box-shadow: 0 3px 12px rgba(26,95,212,0.09);
+}
+.project-item.open {
+  border-color:#1a5fd4;
+  box-shadow: 0 3px 14px rgba(26,95,212,0.12);
+}
+.proj-header {
+  display:flex; align-items:center; gap:14px; padding:15px 22px;
+}
+.project-item.open .proj-header {
+  background: #f7faff;
+  border-bottom: 1px solid #dde3ec;
+}
+.proj-index {
+  font-size:10px; font-weight:700; color:#1a5fd4;
+  width:20px; flex-shrink:0;
+}
+.proj-org {
+  font-size:10px; color:#9aafca; white-space:nowrap; flex-shrink:0;
+  background:#f0f3f8; padding:2px 8px; border-radius:10px;
+}
+.proj-title { font-size:12px; font-weight:700; color:#1c2b3a; flex:1; line-height:1.4; }
+.proj-tags { display:flex; gap:4px; flex-wrap:nowrap; flex-shrink:0; }
+.tag {
+  font-size:9px; color:#1a5fd4;
+  background:#eef3fc; border:1px solid #c4d4f0;
+  border-radius:10px; padding:2px 7px; white-space:nowrap; font-weight:700;
+}
+.proj-toggle {
+  font-size:12px; color:#9aafca; flex-shrink:0;
+  transition: transform 0.25s, color 0.2s;
+  width:20px; text-align:center;
+}
+.project-item.open .proj-toggle { transform:rotate(180deg); color:#1a5fd4; }
+
+.proj-body { display:none; padding:18px 22px 20px 56px; }
+.project-item.open .proj-body { display:block; }
+
+.proj-kpi {
+  display:flex; gap:0; flex-wrap:wrap;
+  margin-bottom:16px;
+  background:#f4f8ff; border-radius:8px; border-left:3px solid #1a5fd4;
+  overflow:hidden;
+}
+.kpi-item {
+  padding:12px 20px;
+  border-right:1px solid #dde3ec;
+  flex-shrink:0;
+}
+.kpi-item:last-child { border-right:none; }
+.kpi-val {
+  font-size:20px; font-weight:700; color:#1a5fd4; line-height:1;
+}
+.kpi-desc { font-size:10px; color:#7a8fa8; margin-top:4px; }
+
+.proj-flow {
+  display:flex; align-items:center; flex-wrap:wrap;
+  gap:0; margin-bottom:14px;
+}
+.flow-box {
+  font-size:11px; color:#2c4a70;
+  background:#f0f4fa; border:1px solid #c8d6e8;
+  border-radius:4px; padding:5px 12px; white-space:nowrap;
+}
+.flow-arrow { color:#b8c8dc; font-size:13px; padding:0 4px; }
+.proj-output {
+  font-size:11px; color:#7a8fa8; line-height:1.7;
+  padding-top:12px; border-top:1px solid #e8eef6;
+}
+.proj-output strong { color:#3a5878; font-weight:700; }
+
+/* ── SKILLS ── */
+.skills-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; }
+.skill-group {
+  background:#fff; border:1px solid #dde3ec;
+  border-radius:10px; padding:22px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.skill-group-title {
+  font-size:10px; font-weight:700; color:#1a5fd4;
+  letter-spacing:1.5px; text-transform:uppercase; margin-bottom:14px;
+  padding-bottom:10px; border-bottom:2px solid #eef3fc;
+}
+.skill-item { display:flex; align-items:center; gap:9px; margin-bottom:9px; }
+.skill-dot {
+  width:5px; height:5px; border-radius:50%;
+  background: linear-gradient(135deg, #1a5fd4, #4a8ff0); flex-shrink:0;
+}
+.skill-name { font-size:12px; color:#4a6080; }
+
+/* ── FOOTER ── */
+footer {
+  background: linear-gradient(135deg, #0d1c2e, #1a3050);
+  padding:40px 0; text-align:center;
+}
+.footer-name {
+  font-size:13px; font-weight:700; color:#fff;
+  letter-spacing:3px; margin-bottom:8px; text-transform:uppercase;
+}
+.footer-contact {
+  font-size:12px; color:#5a7a9a; margin-bottom:4px;
+}
+.footer-sub { font-size:11px; color:#3a5070; }
+
+/* ── ANIM ── */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(16px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.hero-eyebrow { animation: fadeUp 0.4s 0.05s ease both; }
+.hero-name    { animation: fadeUp 0.4s 0.12s ease both; }
+.hero-name-en { animation: fadeUp 0.4s 0.17s ease both; }
+.hero-role    { animation: fadeUp 0.4s 0.20s ease both; }
+.hero-tagline { animation: fadeUp 0.4s 0.26s ease both; }
+.hero-contact { animation: fadeUp 0.4s 0.32s ease both; }
+.hero-stats   { animation: fadeUp 0.4s 0.22s ease both; }
+
+@media(max-width:720px){
+  .hero-inner { grid-template-columns:1fr; }
+  .hero-stats { flex-direction:row; flex-wrap:wrap; }
+  .approach-grid { grid-template-columns:1fr 1fr; }
+  .skills-grid { grid-template-columns:1fr; }
+  nav { padding:0 20px; }
+  .nav-links { display:none; }
+  .wrap { padding:0 20px; }
+  .proj-tags { display:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-id">SHIN YONG YUK · IPS</div>
+  <ul class="nav-links">
+    <li><a href="#approach">접근방식</a></li>
+    <li><a href="#projects">프로젝트</a></li>
+    <li><a href="#skills">역량</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-eyebrow">Integrated Product Support</div>
+        <h1 class="hero-name">신<em>용</em>욱</h1>
+        <span class="hero-name-en">SHIN YONG YUK</span>
+        <p class="hero-role">IPS · RAM-C · 운용유지 이슈 안정화</p>
+        <p class="hero-tagline">
+          이슈는 "좋아진 것 같음"으로 끝나지 않습니다.<br>
+          판정기준 → 전후검증 → 문서화,<br>
+          데이터가 결론을 냅니다.
+        </p>
+        <div class="hero-contact">
+          <div class="chip">dyddnr8306@naver.com</div>
+          <div class="chip">아주대학교 기계공학</div>
+          <div class="chip">에브리봇 인턴 · 인에어 외주</div>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-card">
+          <div class="stat-num">85%</div>
+          <div class="stat-label">모터 소음 개선율<br>(29/34쌍)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">90%+</div>
+          <div class="stat-label">IR 센서 수율 회복</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">300+</div>
+          <div class="stat-label">파트 간섭 0건<br>패키징</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPROACH -->
+<div class="sec-wrap white" id="approach">
+  <div class="wrap">
+    <div class="sec-header">
+      <span class="sec-num">01</span>
+      <h2 class="sec-title">이슈를 닫는 방식</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="approach-grid">
+      <div class="approach-card">
+        <div class="approach-step">STEP 01</div>
+        <div class="approach-name">판정기준 정의</div>
+        <div class="approach-desc">합/불 기준과 측정 조건을 먼저 고정합니다</div>
+      </div>
+      <div class="approach-card">
+        <div class="approach-step">STEP 02</div>
+        <div class="approach-name">재현조건 통제</div>
+        <div class="approach-desc">동일 조건 반복 측정으로 변수를 분리합니다</div>
+      </div>
+      <div class="approach-card">
+        <div class="approach-step">STEP 03</div>
+        <div class="approach-name">전후검증</div>
+        <div class="approach-desc">조치 전·후를 데이터로 1:1 비교합니다</div>
+      </div>
+      <div class="approach-card">
+        <div class="approach-step">STEP 04</div>
+        <div class="approach-name">문서화</div>
+        <div class="approach-desc">FRACAS·체크리스트로 재발방지까지 닫습니다</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<div class="sec-wrap gray" id="projects">
+  <div class="wrap">
+    <div class="sec-header">
+      <span class="sec-num">02</span>
+      <h2 class="sec-title">프로젝트<span class="sec-hint">▾ 클릭하면 상세 펼쳐집니다</span></h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="project-list">
+
+      <div class="project-item" onclick="toggle(this)">
+        <div class="proj-header">
+          <span class="proj-index">01</span>
+          <span class="proj-org">에브리봇 인턴</span>
+          <div class="proj-divider"></div>
+          <span class="proj-title">모터 소음 원인분석 · 전후검증</span>
+          <div class="proj-tags">
+            <span class="tag">NVH</span><span class="tag">FFT</span><span class="tag">전후검증</span>
+          </div>
+          <span class="proj-toggle">▾</span>
+        </div>
+        <div class="proj-body">
+          <div class="proj-kpi">
+            <div class="kpi-item"><div class="kpi-val">85%</div><div class="kpi-desc">개선율 (29/34쌍)</div></div>
+            <div class="kpi-item"><div class="kpi-val">−4.0 dB</div><div class="kpi-desc">ΔdB 평균 감소</div></div>
+            <div class="kpi-item"><div class="kpi-val">0건</div><div class="kpi-desc">악화 샘플</div></div>
+          </div>
+          <div class="proj-flow">
+            <div class="flow-box">FFT 원인분석</div><div class="flow-arrow">→</div>
+            <div class="flow-box">ΔdB 기준 수립</div><div class="flow-arrow">→</div>
+            <div class="flow-box">34쌍 1:1 검증</div><div class="flow-arrow">→</div>
+            <div class="flow-box">업체 개선요청</div>
+          </div>
+          <div class="proj-output">
+            <strong>산출물</strong> &nbsp;소음 데이터(전후/FFT) · 1page 개선 리포트(업체 공유) · FRACAS(NVH-01) · 전후검증 체크리스트
+          </div>
+        </div>
+      </div>
+
+      <div class="project-item" onclick="toggle(this)">
+        <div class="proj-header">
+          <span class="proj-index">02</span>
+          <span class="proj-org">에브리봇 인턴</span>
+          <div class="proj-divider"></div>
+          <span class="proj-title">IR 센서 수율 안정화</span>
+          <div class="proj-tags">
+            <span class="tag">수율개선</span><span class="tag">Python</span><span class="tag">교차검증</span>
+          </div>
+          <span class="proj-toggle">▾</span>
+        </div>
+        <div class="proj-body">
+          <div class="proj-kpi">
+            <div class="kpi-item"><div class="kpi-val">90%+</div><div class="kpi-desc">수율 회복 (n=60)</div></div>
+            <div class="kpi-item"><div class="kpi-val">CASE 4종</div><div class="kpi-desc">정상조건 특정</div></div>
+          </div>
+          <div class="proj-flow">
+            <div class="flow-box">CASE 1~4 정의</div><div class="flow-arrow">→</div>
+            <div class="flow-box">배선/체결 변수 통제</div><div class="flow-arrow">→</div>
+            <div class="flow-box">JIG 교차검증</div><div class="flow-arrow">→</div>
+            <div class="flow-box">작업표준서 수립</div>
+          </div>
+          <div class="proj-output">
+            <strong>산출물</strong> &nbsp;전수 측정 기록 · 협력업체 공유 PPT · 작업표준서 · FRACAS(IR-01)
+          </div>
+        </div>
+      </div>
+
+      <div class="project-item" onclick="toggle(this)">
+        <div class="proj-header">
+          <span class="proj-index">03</span>
+          <span class="proj-org">에브리봇 인턴</span>
+          <div class="proj-divider"></div>
+          <span class="proj-title">조립 단차 전수조사 · 현장 대응</span>
+          <div class="proj-tags">
+            <span class="tag">전수조사</span><span class="tag">임시조치</span><span class="tag">LOT분석</span>
+          </div>
+          <span class="proj-toggle">▾</span>
+        </div>
+        <div class="proj-body">
+          <div class="proj-kpi">
+            <div class="kpi-item"><div class="kpi-val">0.8mm</div><div class="kpi-desc">공차 기준 전수 판정</div></div>
+            <div class="kpi-item"><div class="kpi-val">단기</div><div class="kpi-desc">현장 조립 안정화</div></div>
+          </div>
+          <div class="proj-flow">
+            <div class="flow-box">전수 데이터화</div><div class="flow-arrow">→</div>
+            <div class="flow-box">LOT/색상 분리</div><div class="flow-arrow">→</div>
+            <div class="flow-box">임시조치(Containment)</div><div class="flow-arrow">→</div>
+            <div class="flow-box">원인 범위 축소</div>
+          </div>
+          <div class="proj-output">
+            <strong>산출물</strong> &nbsp;전수 측정 기록 · 임시조치 공유 · FRACAS(ASSY-01)
+          </div>
+        </div>
+      </div>
+
+      <div class="project-item" onclick="toggle(this)">
+        <div class="proj-header">
+          <span class="proj-index">04</span>
+          <span class="proj-org">아주대 캡스톤</span>
+          <div class="proj-divider"></div>
+          <span class="proj-title">가변형 이동 플랫폼 구조 설계 · 신뢰성 검증</span>
+          <div class="proj-tags">
+            <span class="tag">LS-DYNA</span><span class="tag">구조해석</span><span class="tag">신뢰성</span>
+          </div>
+          <span class="proj-toggle">▾</span>
+        </div>
+        <div class="proj-body">
+          <div class="proj-kpi">
+            <div class="kpi-item"><div class="kpi-val">57%↓</div><div class="kpi-desc">접촉 최대응력</div></div>
+            <div class="kpi-item"><div class="kpi-val">85%</div><div class="kpi-desc">주행 성공률</div></div>
+            <div class="kpi-item"><div class="kpi-val">1.15배</div><div class="kpi-desc">단차 주행 성능</div></div>
+          </div>
+          <div class="proj-flow">
+            <div class="flow-box">3D 설계·프로토</div><div class="flow-arrow">→</div>
+            <div class="flow-box">μ 스윕(최악조건)</div><div class="flow-arrow">→</div>
+            <div class="flow-box">취약부 보강</div><div class="flow-arrow">→</div>
+            <div class="flow-box">실주행 전후검증</div>
+          </div>
+          <div class="proj-output">
+            <strong>산출물</strong> &nbsp;LS-DYNA 해석 결과 · 시험 전후검증 데이터 · 보강 설계안
+          </div>
+        </div>
+      </div>
+
+      <div class="project-item" onclick="toggle(this)">
+        <div class="proj-header">
+          <span class="proj-index">05</span>
+          <span class="proj-org">인에어 외주</span>
+          <div class="proj-divider"></div>
+          <span class="proj-title">듀얼 시스템 VTOL UAV 구조 설계</span>
+          <div class="proj-tags">
+            <span class="tag">SolidWorks</span><span class="tag">CFD</span><span class="tag">도면화</span>
+          </div>
+          <span class="proj-toggle">▾</span>
+        </div>
+        <div class="proj-body">
+          <div class="proj-kpi">
+            <div class="kpi-item"><div class="kpi-val">300+</div><div class="kpi-desc">파트 간섭 0건</div></div>
+            <div class="kpi-item"><div class="kpi-val">3.4%↑</div><div class="kpi-desc">양항비 개선</div></div>
+            <div class="kpi-item"><div class="kpi-val">6.3%↓</div><div class="kpi-desc">항력 감소</div></div>
+          </div>
+          <div class="proj-flow">
+            <div class="flow-box">C.G 기반 레이아웃</div><div class="flow-arrow">→</div>
+            <div class="flow-box">공차/간섭 검토</div><div class="flow-arrow">→</div>
+            <div class="flow-box">CFD 피드백 반영</div><div class="flow-arrow">→</div>
+            <div class="flow-box">도면·BOM 확정</div>
+          </div>
+          <div class="proj-output">
+            <strong>산출물</strong> &nbsp;3D 모델 · 부품 도면 · BOM · CFD 최종안
+          </div>
+        </div>
+      </div>
+
+      <div class="project-item" onclick="toggle(this)">
+        <div class="proj-header">
+          <span class="proj-index">06</span>
+          <span class="proj-org">아주대 항공동아리</span>
+          <div class="proj-divider"></div>
+          <span class="proj-title">자작모형항공기 설계 · 제작 · 시험비행</span>
+          <div class="proj-tags">
+            <span class="tag">팀장</span><span class="tag">SolidWorks</span><span class="tag">시험비행</span>
+          </div>
+          <span class="proj-toggle">▾</span>
+        </div>
+        <div class="proj-body">
+          <div class="proj-kpi">
+            <div class="kpi-item"><div class="kpi-val">21%</div><div class="kpi-desc">경량화 (1.65→1.30kg)</div></div>
+            <div class="kpi-item"><div class="kpi-val">3회</div><div class="kpi-desc">프로토타입 반복 검증</div></div>
+            <div class="kpi-item"><div class="kpi-val">성공</div><div class="kpi-desc">최종 시험비행 달성</div></div>
+          </div>
+          <div class="proj-flow">
+            <div class="flow-box">기체 설계·제작</div><div class="flow-arrow">→</div>
+            <div class="flow-box">시험비행·실패분석</div><div class="flow-arrow">→</div>
+            <div class="flow-box">C.G/추력 조정</div><div class="flow-arrow">→</div>
+            <div class="flow-box">안정비행 달성</div>
+          </div>
+          <div class="proj-output">
+            <strong>역할 (17명 中 팀장)</strong> &nbsp;일정/역할 총괄 · 구조 설계(주익/미익/스파) · 시험비행 수행 · 실패-개선 루프 운영
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<div class="sec-wrap white" id="skills">
+  <div class="wrap">
+    <div class="sec-header">
+      <span class="sec-num">03</span>
+      <h2 class="sec-title">역량 · 툴</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-group-title">설계 · 해석</div>
+        <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">SolidWorks (구조/기구 설계)</div></div>
+        <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">LS-DYNA / ANSYS</div></div>
+        <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">Fluent / OpenVSP (CFD)</div></div>
+        <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">CATIA / AutoCAD</div></div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">분석 · 검증</div>
+        <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">FFT / NVH 신호 분석</div></div>
+        <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">Python (pandas/numpy/matplotlib)</div></div>
+        <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">MATLAB</div></div>
+        <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">오실로스코프 / 데이터 로깅</div></div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">IPS · 문서화</div>
+        <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">FRACAS 이슈 정리</div></div>
+        <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">전후검증 체크리스트</div></div>
+        <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">작업표준서 · BOM</div></div>
+        <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">LLM 활용 문서화 보조</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">SHIN YONG YUK</div>
+  <div class="footer-contact">dyddnr8306@naver.com</div>
+  <div class="footer-sub">IPS · 운용유지 이슈 안정화</div>
+</footer>
+
+<script>
+function toggle(el) { el.classList.toggle('open'); }
+</script>
+</body>
+</html>
