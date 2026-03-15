@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>신용욱 | LIG넥스원 기계융합</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --ff: 'Malgun Gothic', '맑은 고딕', -apple-system, sans-serif;
+    --accent: #1D6FA4; --accent-light: #E8F3FB;
+    --line: rgba(0,0,0,0.08); --text: #111; --muted: #666; --bg: #FAFAFA; --white: #fff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0D1B2A; --white: #122032; --text: #F0F4F8; --muted: #8BA3BA; --line: rgba(255,255,255,0.08); --accent: #4DA6E8; --accent-light: #0D2A3F; }
+  }
+  body { font-family: var(--ff); background: var(--bg); color: var(--text); line-height: 1.7; overflow-x: hidden; }
+  .site { max-width: 900px; margin: 0 auto; padding: 0 24px 80px; }
+  .fade-up { opacity: 0; transform: translateY(22px); transition: opacity 0.55s cubic-bezier(.4,0,.2,1), transform 0.55s cubic-bezier(.4,0,.2,1); }
+  .fade-up.vis { opacity: 1; transform: translateY(0); }
+
+  /* HERO */
+  .hero { padding: 72px 0 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 32px; flex-wrap: wrap; }
+  .hero-left { flex: 1; min-width: 260px; }
+  .hero-tag { display: inline-block; font-size: 11px; letter-spacing: 0.12em; color: var(--accent); border: 1px solid var(--accent); padding: 3px 10px; margin-bottom: 20px; text-transform: uppercase; opacity: 0; animation: tagIn 0.5s 0.1s cubic-bezier(.4,0,.2,1) forwards; }
+  @keyframes tagIn { from{opacity:0;transform:translateX(-10px)} to{opacity:1;transform:translateX(0)} }
+  .hero h1 { font-size: clamp(26px, 4.8vw, 42px); font-weight: 700; color: var(--text); line-height: 1.25; letter-spacing: -0.02em; margin-bottom: 16px; opacity: 0; animation: heroIn 0.65s 0.2s cubic-bezier(.4,0,.2,1) forwards; }
+  @keyframes heroIn { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+  .hero h1 span { color: var(--accent); }
+  .hero-sub { font-size: 14.5px; color: var(--muted); max-width: 480px; line-height: 1.9; opacity: 0; animation: heroIn 0.65s 0.32s cubic-bezier(.4,0,.2,1) forwards; }
+  .hero-right { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; padding-top: 4px; opacity: 0; animation: heroIn 0.65s 0.44s cubic-bezier(.4,0,.2,1) forwards; }
+  .hero-card { text-align: right; padding: 16px 18px; border: 1px solid var(--line); background: var(--white); line-height: 1.75; }
+  .hero-card .hc-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .hero-card .hc-main { font-size: 13px; font-weight: 600; color: var(--text); }
+  .hero-card .hc-sub { font-size: 12px; color: var(--muted); }
+  .hero-card .hc-email { font-size: 12px; color: var(--accent); margin-top: 4px; }
+  .hero-link { font-size: 12px; color: var(--accent); text-decoration: none; letter-spacing: 0.02em; transition: letter-spacing 0.2s; }
+  .hero-link:hover { letter-spacing: 0.06em; }
+
+  /* INTRO */
+  .intro-stmt { margin-top: 36px; padding: 24px 0 40px; border-bottom: 1px solid var(--line); opacity: 0; animation: heroIn 0.65s 0.54s cubic-bezier(.4,0,.2,1) forwards; }
+  .intro-stmt p { font-size: 13.5px; color: var(--muted); line-height: 1.95; border-left: 2px solid var(--accent); padding-left: 18px; max-width: 640px; }
+  .intro-stmt strong { color: var(--text); font-weight: 500; }
+
+  /* SKILLS */
+  .skills-strip { display: flex; gap: 8px; flex-wrap: wrap; padding: 28px 0; border-bottom: 1px solid var(--line); }
+  .skill-pill { font-size: 12px; padding: 5px 14px; background: var(--white); border: 1px solid var(--line); color: var(--muted); opacity: 0; transform: translateY(8px); transition: opacity 0.35s, transform 0.35s, background 0.2s, color 0.2s, border-color 0.2s; cursor: default; }
+  .skill-pill.vis { opacity: 1; transform: translateY(0); }
+  .skill-pill.hi { background: var(--accent-light); border-color: transparent; color: var(--accent); }
+  .skill-pill:hover { background: var(--accent-light); color: var(--accent); border-color: transparent; }
+
+  /* SECTION */
+  .sec { padding: 48px 0; border-bottom: 1px solid var(--line); }
+  .sec-label { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 28px; }
+
+  /* STAT ROW */
+  .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .stat-cell { background: var(--white); padding: 20px 16px 18px; text-align: center; }
+  .stat-num { font-size: 26px; font-weight: 700; color: var(--accent); letter-spacing: -0.02em; display: block; }
+  .stat-desc { font-size: 11.5px; color: var(--muted); margin-top: 5px; line-height: 1.55; }
+
+  /* PROJECT CARDS */
+  .proj-grid { display: flex; flex-direction: column; }
+  .proj-card { background: var(--white); border: 1px solid var(--line); margin-bottom: -1px; padding: 22px 28px; display: grid; grid-template-columns: auto 1fr auto; gap: 20px; align-items: start; cursor: pointer; position: relative; z-index: 1; transition: border-color 0.2s, transform 0.22s cubic-bezier(.4,0,.2,1), box-shadow 0.22s; }
+  .proj-card:hover { border-color: var(--accent); z-index: 2; transform: translateX(4px); box-shadow: -4px 0 0 0 var(--accent); }
+  .proj-card.active { border-color: var(--accent); z-index: 2; box-shadow: -4px 0 0 0 var(--accent); }
+  .proj-num { font-size: 11px; color: var(--muted); padding-top: 3px; min-width: 24px; }
+  .proj-title { font-size: 15.5px; font-weight: 600; color: var(--text); margin-bottom: 4px; line-height: 1.4; }
+  .proj-where { font-size: 12px; color: var(--muted); margin-bottom: 9px; }
+  .proj-desc { font-size: 13.5px; color: var(--muted); line-height: 1.78; max-width: 560px; }
+  .proj-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+  .proj-tag { font-size: 11px; padding: 3px 10px; border: 1px solid var(--line); color: var(--muted); }
+  .proj-arrow { font-size: 18px; color: var(--muted); padding-top: 2px; transition: transform 0.25s cubic-bezier(.4,0,.2,1), color 0.2s; display: inline-block; }
+  .proj-card:hover .proj-arrow { color: var(--accent); transform: translateX(5px); }
+  .proj-card.active .proj-arrow { color: var(--accent); transform: rotate(90deg); }
+
+  /* DETAIL PANEL */
+  .detail-panel { background: var(--accent-light); border: 1px solid var(--accent); border-top: none; padding: 0 28px; max-height: 0; overflow: hidden; transition: max-height 0.38s cubic-bezier(.4,0,.2,1), padding 0.22s; margin-bottom: -1px; position: relative; z-index: 1; }
+  .detail-panel.open { max-height: 220px; padding: 18px 28px; }
+  .detail-kv { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }
+  .kv-label { font-size: 11px; color: var(--muted); margin-bottom: 4px; letter-spacing: 0.05em; }
+  .kv-val { font-size: 14px; color: var(--text); font-weight: 500; }
+
+  /* COMPETENCY */
+  .comp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+  .comp-card { background: var(--white); border: 1px solid var(--line); padding: 22px 22px 20px; transition: border-color 0.2s, transform 0.22s cubic-bezier(.4,0,.2,1); }
+  .comp-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .comp-icon { font-size: 17px; color: var(--accent); margin-bottom: 12px; }
+  .comp-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+  .comp-items { list-style: none; }
+  .comp-items li { font-size: 13px; color: var(--muted); padding: 5px 0; border-bottom: 1px solid var(--line); line-height: 1.5; }
+  .comp-items li:last-child { border-bottom: none; }
+
+  /* WHY LIG */
+  .why-box { background: var(--white); border: 1px solid var(--line); border-left: 3px solid var(--accent); padding: 28px 32px; }
+  .why-box p { font-size: 13.5px; color: var(--muted); line-height: 1.95; margin-bottom: 16px; }
+  .why-box p:last-child { margin-bottom: 0; }
+  .why-box strong { color: var(--text); font-weight: 500; }
+
+  /* CONTACT */
+  .contact-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+  .contact-item { font-size: 14px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+  .contact-item a { color: var(--accent); text-decoration: none; position: relative; }
+  .contact-item a::after { content:''; position:absolute; left:0; bottom:-1px; width:0; height:1px; background:var(--accent); transition:width 0.2s; }
+  .contact-item a:hover::after { width: 100%; }
+  .contact-dot { width: 4px; height: 4px; background: var(--line); border-radius: 50%; }
+
+  /* CLOSING */
+  .closing { margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .hero { padding: 48px 0 0; }
+    .hero-right { align-items: flex-start; }
+    .hero-card { text-align: left; }
+    .proj-card { grid-template-columns: auto 1fr; }
+    .proj-arrow { display: none; }
+    .stat-row { grid-template-columns: repeat(2, 1fr); }
+    .why-box { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="site">
+
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-tag">LIG넥스원 기계융합 지원</div>
+      <h1>구조를 구상하고,<br><span>끝까지 검증합니다.</span></h1>
+      <p class="hero-sub">
+        설계안을 구체화하는 것에서 멈추지 않고,<br>
+        해석으로 확인하고, 직접 제작·조립하여<br>
+        실제로 작동하는지를 확인하는 과정을 반복해왔습니다.
+      </p>
+    </div>
+    <div class="hero-right">
+      <div class="hero-card">
+        <div class="hc-label">지원 정보</div>
+        <div class="hc-main">LIG넥스원 · 기계융합</div>
+        <div class="hc-sub">신용욱 · 아주대학교 기계공학과</div>
+        <div class="hc-email">dyddnr8306@naver.com</div>
+      </div>
+      <a class="hero-link" href="https://dyddnr8306.github.io/portfolio/" target="_blank">→ 포트폴리오 전체 보기</a>
+    </div>
+  </div>
+
+  <div class="intro-stmt">
+    <p>
+      구조·유동·열·진동 분야에 걸친 설계와 검증 경험을 바탕으로 지원합니다.<br>
+      UAV 구조 설계, 로봇 충격 해석, 자작항공기 비행 검증, 동력전달계 설계,<br>
+      양산 프로토 조립과 열·진동 검토까지 — 여러 프로젝트에 걸쳐 수행했습니다.<br>
+      <strong>설계가 실제 환경에서도 의도한 대로 작동하는지를 확인하는 것</strong>을 중요하게 여깁니다.
+    </p>
+  </div>
+
+  <div class="skills-strip" id="skills-strip">
+    <span class="skill-pill hi">SolidWorks</span>
+    <span class="skill-pill hi">LS-DYNA</span>
+    <span class="skill-pill hi">CFD</span>
+    <span class="skill-pill hi">AGMA 설계</span>
+    <span class="skill-pill hi">정적 해석</span>
+    <span class="skill-pill hi">열·진동 검토</span>
+    <span class="skill-pill">모달 해석</span>
+    <span class="skill-pill">동력전달계 설계</span>
+    <span class="skill-pill">공차 설계</span>
+    <span class="skill-pill">도면화</span>
+    <span class="skill-pill">프로토타입 검증</span>
+  </div>
+
+  <div class="sec">
+    <div class="sec-label fade-up">수치로 본 경험</div>
+    <div class="stat-row fade-up">
+      <div class="stat-cell"><span class="stat-num" data-target="300" data-suffix="+">0</span><div class="stat-desc">설계 파트<br>간섭 0건 달성</div></div>
+      <div class="stat-cell"><span class="stat-num" data-target="57" data-suffix="%">0</span><div class="stat-desc">구조 보강 후<br>최대응력 감소</div></div>
+      <div class="stat-cell"><span class="stat-num" data-target="21" data-suffix="%">0</span><div class="stat-desc">자작항공기<br>경량화 달성</div></div>
+      <div class="stat-cell"><span class="stat-num" data-target="83" data-suffix="%">0</span><div class="stat-desc">동력전달계<br>효율 개선 결과</div></div>
+      <div class="stat-cell"><span class="stat-num" data-target="60" data-suffix="대">0</span><div class="stat-desc">직접 조립·검증한<br>양산 프로토</div></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-label fade-up">프로젝트 경험</div>
+    <div class="proj-grid" id="proj-grid"></div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-label fade-up">핵심 역량</div>
+    <div class="comp-grid">
+      <div class="comp-card fade-up">
+        <div class="comp-icon">◈</div>
+        <div class="comp-title">구조 설계</div>
+        <ul class="comp-items">
+          <li>요구조건 → 구조·메커니즘 구체화</li>
+          <li>C.G 기반 배치 및 간섭 검토</li>
+          <li>공차·조립성 반영 설계</li>
+        </ul>
+      </div>
+      <div class="comp-card fade-up" style="transition-delay:.07s">
+        <div class="comp-icon">◉</div>
+        <div class="comp-title">해석 및 검증</div>
+        <ul class="comp-items">
+          <li>LS-DYNA 충격·접촉 해석</li>
+          <li>SolidWorks CFD / 정적 해석</li>
+          <li>AGMA 기반 피로·수명 계산</li>
+        </ul>
+      </div>
+      <div class="comp-card fade-up" style="transition-delay:.14s">
+        <div class="comp-icon">◎</div>
+        <div class="comp-title">열·진동 검토</div>
+        <ul class="comp-items">
+          <li>카트리지 히터 열 전달 실험</li>
+          <li>모달 해석 기초 학습·적용</li>
+          <li>모터 소음 정량 비교 검증</li>
+        </ul>
+      </div>
+      <div class="comp-card fade-up" style="transition-delay:.21s">
+        <div class="comp-icon">◇</div>
+        <div class="comp-title">실구현 감각</div>
+        <ul class="comp-items">
+          <li>프로토 60대 직접 조립·검증</li>
+          <li>사출품 단차 실측·공차 분석</li>
+          <li>설계–제작–시험 반복 수행</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-label fade-up">LIG넥스원에 지원하는 이유</div>
+    <div class="why-box fade-up">
+      <p>
+        지금까지 수행한 프로젝트는 대부분 <strong>설계 기준을 스스로 설정하고, 해석과 실측을 통해 그 기준의 충족 여부를 확인하는 방식</strong>으로 진행했습니다.
+        UAV 외주 설계에서는 300개 파트의 간섭을 0건으로 맞췄고, 에브리봇 인턴십에서는 양산 프로토 60대를 직접 조립하며 공차 누적과 정합 이슈를 정리했습니다.
+        열·진동 관점의 검토도 인턴십 과정에서 직접 수행했으며, 이후 모달 해석을 추가로 학습했습니다.
+      </p>
+      <p>
+        그 과정에서 <strong>설계-해석-제작-시험을 한 흐름으로 연결해서 완성도를 높이는 방식</strong>이 저에게 맞는다는 것을 확인하게 되었습니다.
+        LIG넥스원은 그러한 과정이 더 엄격하게 요구되는 환경이라고 생각하며,
+        지금까지의 경험을 바탕으로 더 깊이 있는 역량을 쌓고 싶습니다.
+      </p>
+    </div>
+  </div>
+
+  <div class="sec fade-up">
+    <div class="sec-label">연락처</div>
+    <div class="contact-row">
+      <div class="contact-item"><span>이메일</span><a href="mailto:dyddnr8306@naver.com">dyddnr8306@naver.com</a></div>
+      <div class="contact-dot"></div>
+      <div class="contact-item"><span>포트폴리오</span><a href="https://dyddnr8306.github.io/portfolio/" target="_blank">dyddnr8306.github.io/portfolio</a></div>
+      <div class="contact-dot"></div>
+      <div class="contact-item"><span>학교</span><span>아주대학교 기계공학과</span></div>
+    </div>
+  </div>
+
+  <div class="closing fade-up">
+    <span>신용욱 · LIG넥스원 기계융합 지원</span>
+    <span>구조 설계 · 해석 검증 · 실구현</span>
+  </div>
+
+</div>
+
+<script>
+const projects = [
+  {
+    num:"01", title:"듀얼시스템 VTOL UAV 구조 설계", where:"㈜ 인에어 | 프리랜서 프로젝트",
+    desc:"10kg급 장기 체공 UAV의 300개 파트 구조를 처음부터 설계했습니다. 무게중심 기반 배치, 서보·배선 패키징, CFD 형상 보완을 검토하여 간섭 0건, 양항비 3.4% 향상을 달성했습니다.",
+    tags:["SolidWorks","CFD","3D 모델링","도면화","간섭 검토"]
+  },
+  {
+    num:"02", title:"가변형 바퀴 로봇 구조 설계", where:"아주대학교 융합캡스톤디자인",
+    desc:"계단·단차 주행이 가능한 가변형 바퀴 로봇을 설계·제작했습니다. LS-DYNA 충격·접촉 해석으로 취약 구간을 파악하고 보강 설계를 반영했으며, 실주행 시험으로 구조 안정성을 확인했습니다.",
+    tags:["LS-DYNA","충격·접촉 해석","구조 보강","실주행 검증"]
+  },
+  {
+    num:"03", title:"자작항공기 설계 및 비행 검증", where:"아주대학교 AFEC 항공 동아리",
+    desc:"2년간 팀장·부팀장으로 자작항공기 2기의 설계·제작·비행 검증을 수행했습니다. 총 12회의 실비행을 통해 비행 실패 원인을 분석하고 구조를 반복 개선하여 안정 비행을 달성했습니다.",
+    tags:["기체 구조 설계","실비행 검증","경량화","비행 안정성"]
+  },
+  {
+    num:"04", title:"AGMA 기반 기어·축·베어링 설계", where:"아주대학교 기계설계 프로젝트",
+    desc:"소형 풍력발전기용 동력전달계를 AGMA 기준으로 설계했습니다. 기어 강도부터 축 피로, 베어링 수명까지 연계하여 검토했으며, 초기 설계안의 한계를 반영해 전달 효율을 50.2%에서 83%로 개선했습니다.",
+    tags:["AGMA","동력전달계 설계","피로 해석","베어링 선정"]
+  },
+  {
+    num:"05", title:"에브리봇 R&D 기구개발 인턴십", where:"에브리봇 | 현장실습",
+    desc:"로봇 청소기 프로토타입 60대를 직접 조립하며 조립성·정합·공차 이슈를 정리했습니다. 열 전달 실험 및 모달 해석 학습을 통해 구조 설계 외 열·진동 관점의 검토 범위를 넓혔습니다.",
+    tags:["프로토 조립","공차·정합 검토","열 전달 실험","모달 해석"]
+  }
+];
+
+const kvs = [
+  [{label:"핵심 성과",val:"300+ 파트 간섭 0건"},{label:"CFD 결과",val:"양항비 +3.4% / 항력 −6.3%"},{label:"공차 기준",val:"3D 프린팅 0.2~0.3mm"},{label:"역할",val:"C.G 배치 · 조립성 · 형상 최적화"}],
+  [{label:"최대응력 감소",val:"57%"},{label:"단차 주행 향상",val:"1.15배"},{label:"계단 주행 성공률",val:"85%"},{label:"검증 방식",val:"해석 + 실주행 연계"}],
+  [{label:"총 실비행 횟수",val:"12회"},{label:"경량화",val:"1.65kg → 1.30kg (−21%)"},{label:"안정 비행 달성",val:"10번째 시도"},{label:"역할",val:"2023 부팀장 / 2024 팀장"}],
+  [{label:"효율 개선",val:"50.2% → 83%"},{label:"검토 기준",val:"AGMA 굽힘·접촉 응력"},{label:"설계 항목",val:"기어 · 축 · 베어링 연계"},{label:"기하 조건",val:"간섭 없음, 접촉률 확보"}],
+  [{label:"조립 수량",val:"1·2차 프로토 총 60대"},{label:"검토 범위",val:"조립성 · 정합 · 열 · 진동"},{label:"자발 학습",val:"모달 해석 기초 추가 학습"},{label:"인턴 유형",val:"현장실습 (R&D 기구개발팀)"}]
+];
+
+const grid = document.getElementById('proj-grid');
+projects.forEach((p,i) => {
+  const wrap = document.createElement('div');
+  const card = document.createElement('div');
+  card.className = 'proj-card fade-up';
+  card.style.transitionDelay = (i*0.07)+'s';
+  card.innerHTML = `
+    <span class="proj-num">${p.num}</span>
+    <div>
+      <div class="proj-title">${p.title}</div>
+      <div class="proj-where">${p.where}</div>
+      <div class="proj-desc">${p.desc}</div>
+      <div class="proj-tags">${p.tags.map(t=>`<span class="proj-tag">${t}</span>`).join('')}</div>
+    </div>
+    <span class="proj-arrow">→</span>`;
+  const detail = document.createElement('div');
+  detail.className = 'detail-panel';
+  detail.innerHTML = `<div class="detail-kv">${kvs[i].map(k=>`<div><div class="kv-label">${k.label}</div><div class="kv-val">${k.val}</div></div>`).join('')}</div>`;
+  card.addEventListener('click', () => {
+    const wasOpen = detail.classList.contains('open');
+    document.querySelectorAll('.detail-panel').forEach(d=>d.classList.remove('open'));
+    document.querySelectorAll('.proj-card').forEach(c=>c.classList.remove('active'));
+    if (!wasOpen) { detail.classList.add('open'); card.classList.add('active'); }
+  });
+  wrap.appendChild(card); wrap.appendChild(detail); grid.appendChild(wrap);
+});
+
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); io.unobserve(e.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+
+const pillIO = new IntersectionObserver(entries => {
+  if (entries[0].isIntersecting) {
+    document.querySelectorAll('.skill-pill').forEach((p,i) => setTimeout(()=>p.classList.add('vis'), i*45));
+    pillIO.disconnect();
+  }
+}, { threshold: 0.3 });
+pillIO.observe(document.getElementById('skills-strip'));
+
+const countIO = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.querySelectorAll('.stat-num').forEach(el => {
+      const target=+el.dataset.target, suffix=el.dataset.suffix||'', dur=900, t0=performance.now();
+      const tick = now => {
+        const p=Math.min((now-t0)/dur,1), ease=1-Math.pow(1-p,3);
+        el.textContent=Math.round(ease*target)+suffix;
+        if(p<1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+    countIO.unobserve(e.target);
+  });
+}, { threshold: 0.4 });
+document.querySelectorAll('.stat-row').forEach(r=>countIO.observe(r));
+</script>
+</body>
+</html>
