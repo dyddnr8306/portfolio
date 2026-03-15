@@ -1,0 +1,431 @@
+
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --ff: 'Malgun Gothic', '맑은 고딕', -apple-system, sans-serif;
+    --navy: #0D1B2A;
+    --navy2: #1A2E45;
+    --accent: #1D6FA4;
+    --accent-light: #E8F3FB;
+    --line: rgba(0,0,0,0.08);
+    --text: #111;
+    --muted: #666;
+    --bg: #FAFAFA;
+    --white: #fff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0D1B2A;
+      --white: #122032;
+      --text: #F0F4F8;
+      --muted: #8BA3BA;
+      --line: rgba(255,255,255,0.08);
+      --accent: #4DA6E8;
+      --accent-light: #0D2A3F;
+      --navy: #E0EAF4;
+      --navy2: #A8C0D4;
+    }
+  }
+  body { font-family: var(--ff); background: var(--bg); color: var(--text); line-height: 1.7; }
+
+  .site { max-width: 900px; margin: 0 auto; padding: 0 24px 80px; }
+
+  /* HERO */
+  .hero {
+    padding: 72px 0 60px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .hero-left { flex: 1; min-width: 240px; }
+  .hero-tag {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 3px 10px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero-sub {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 480px;
+    line-height: 1.8;
+  }
+  .hero-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+  }
+  .hero-meta {
+    font-size: 13px;
+    color: var(--muted);
+    text-align: right;
+  }
+  .hero-meta strong { color: var(--text); font-weight: 500; }
+  .hero-link {
+    font-size: 12px;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+  .hero-link:hover { text-decoration: underline; }
+
+  /* SKILLS STRIP */
+  .skills-strip {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .skill-pill {
+    font-size: 12px;
+    padding: 5px 14px;
+    background: var(--white);
+    border: 1px solid var(--line);
+    color: var(--muted);
+    cursor: default;
+  }
+  .skill-pill.hi {
+    background: var(--accent-light);
+    border-color: transparent;
+    color: var(--accent);
+  }
+
+  /* SECTION */
+  .sec { padding: 48px 0; border-bottom: 1px solid var(--line); }
+  .sec:last-child { border-bottom: none; }
+  .sec-label {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 28px;
+  }
+
+  /* PROJECT CARDS */
+  .proj-grid { display: flex; flex-direction: column; gap: 20px; }
+  .proj-card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    padding: 24px 28px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 20px;
+    align-items: start;
+    cursor: pointer;
+    transition: border-color 0.18s;
+  }
+  .proj-card:hover { border-color: var(--accent); }
+  .proj-num {
+    font-size: 11px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    padding-top: 2px;
+    min-width: 24px;
+  }
+  .proj-body {}
+  .proj-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .proj-where {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .proj-desc {
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.75;
+    max-width: 560px;
+  }
+  .proj-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+  .proj-tag {
+    font-size: 11px;
+    padding: 3px 10px;
+    border: 1px solid var(--line);
+    color: var(--muted);
+  }
+  .proj-arrow {
+    font-size: 16px;
+    color: var(--muted);
+    padding-top: 2px;
+    transition: transform 0.18s, color 0.18s;
+  }
+  .proj-card:hover .proj-arrow { transform: translateX(4px); color: var(--accent); }
+
+  /* DETAIL PANEL */
+  .detail-panel {
+    background: var(--accent-light);
+    border: 1px solid var(--accent);
+    border-top: none;
+    padding: 20px 28px;
+    display: none;
+  }
+  .detail-panel.open { display: block; }
+  .detail-kv { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }
+  .kv-item {}
+  .kv-label { font-size: 11px; color: var(--muted); margin-bottom: 4px; letter-spacing: 0.05em; }
+  .kv-val { font-size: 14px; color: var(--text); font-weight: 500; }
+
+  /* COMPETENCY */
+  .comp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+  .comp-card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    padding: 22px 22px 20px;
+  }
+  .comp-icon { font-size: 20px; margin-bottom: 12px; }
+  .comp-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+  .comp-items { list-style: none; }
+  .comp-items li {
+    font-size: 13px;
+    color: var(--muted);
+    padding: 4px 0;
+    border-bottom: 1px solid var(--line);
+    line-height: 1.5;
+  }
+  .comp-items li:last-child { border-bottom: none; }
+
+  /* CONTACT */
+  .contact-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+  .contact-item { font-size: 14px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+  .contact-item a { color: var(--accent); text-decoration: none; }
+  .contact-item a:hover { text-decoration: underline; }
+  .contact-dot { width: 5px; height: 5px; background: var(--line); border-radius: 50%; }
+
+  /* CLOSING */
+  .closing {
+    padding: 48px 0 0;
+    font-size: 13px;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+</style>
+
+<div class="site">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-tag">LIG넥스원 기계융합</div>
+      <h1>설계를 검증으로<br>완성하는 <span>신용욱</span>입니다.</h1>
+      <p class="hero-sub">구조를 구상하고, 수치로 검증하고, 실제로 만들어봤습니다.<br>
+      UAV 설계부터 로봇, 항공기, 기어 시스템까지 — 매번 기준을 먼저 세우고 그 기준에 맞게 설계를 구체화해왔습니다.</p>
+    </div>
+    <div class="hero-right">
+      <div class="hero-meta">
+        <strong>아주대학교</strong><br>
+        기계공학과
+      </div>
+      <div class="hero-meta" style="margin-top:4px">
+        <strong>dyddnr8306@naver.com</strong>
+      </div>
+      <a class="hero-link" href="https://dyddnr8306.github.io/portfolio/" target="_blank">→ 포트폴리오 웹사이트</a>
+    </div>
+  </div>
+
+  <!-- SKILLS STRIP -->
+  <div class="skills-strip">
+    <span class="skill-pill hi">SolidWorks</span>
+    <span class="skill-pill hi">LS-DYNA</span>
+    <span class="skill-pill hi">CFD</span>
+    <span class="skill-pill hi">AGMA 설계</span>
+    <span class="skill-pill hi">정적 해석</span>
+    <span class="skill-pill">3D 모델링</span>
+    <span class="skill-pill">공차 설계</span>
+    <span class="skill-pill">도면화</span>
+    <span class="skill-pill">모달 해석</span>
+    <span class="skill-pill">열·진동 검토</span>
+    <span class="skill-pill">프로토타입 검증</span>
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="sec">
+    <div class="sec-label">프로젝트 경험</div>
+    <div class="proj-grid" id="proj-grid"></div>
+  </div>
+
+  <!-- COMPETENCY -->
+  <div class="sec">
+    <div class="sec-label">핵심 역량</div>
+    <div class="comp-grid">
+      <div class="comp-card">
+        <div class="comp-icon">◈</div>
+        <div class="comp-title">구조 구상</div>
+        <ul class="comp-items">
+          <li>요구조건 → 구조·메커니즘 구체화</li>
+          <li>C.G 기반 배치 및 간섭 검토</li>
+          <li>공차·조립성을 반영한 실무형 설계</li>
+        </ul>
+      </div>
+      <div class="comp-card">
+        <div class="comp-icon">◉</div>
+        <div class="comp-title">정량 검증</div>
+        <ul class="comp-items">
+          <li>LS-DYNA 충격·접촉 해석</li>
+          <li>SolidWorks CFD / 정적 해석</li>
+          <li>AGMA 기반 피로·수명 계산</li>
+        </ul>
+      </div>
+      <div class="comp-card">
+        <div class="comp-icon">◎</div>
+        <div class="comp-title">실구현 감각</div>
+        <ul class="comp-items">
+          <li>프로토 조립 60대 직접 검증 경험</li>
+          <li>사출품 단차 실측·공차 분석</li>
+          <li>열·진동 관점 설계 검토 확장</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="sec">
+    <div class="sec-label">연락처</div>
+    <div class="contact-row">
+      <div class="contact-item">
+        <span>이메일</span>
+        <a href="mailto:dyddnr8306@naver.com">dyddnr8306@naver.com</a>
+      </div>
+      <div class="contact-dot"></div>
+      <div class="contact-item">
+        <span>포트폴리오</span>
+        <a href="https://dyddnr8306.github.io/portfolio/" target="_blank">dyddnr8306.github.io/portfolio</a>
+      </div>
+      <div class="contact-dot"></div>
+      <div class="contact-item">
+        <span>학교</span>
+        <span>아주대학교 기계공학과</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="closing">
+    <span>신용욱 · LIG넥스원 기계융합 지원</span>
+    <span>구조 설계 · 설계 검증 · 실구현</span>
+  </div>
+
+</div>
+
+<script>
+const projects = [
+  {
+    num: "01",
+    title: "듀얼시스템 VTOL UAV 구조 설계",
+    where: "㈜ 인에어 | 프리랜서 프로젝트",
+    desc: "10kg급 장기 체공 UAV의 300+ 파트 구조를 처음부터 설계했습니다. 무게중심 기반 배치부터 서보·배선 패키징, CFD 형상 보완까지 — 간섭 0건, 양항비 3.4% 향상을 달성했습니다.",
+    tags: ["SolidWorks", "CFD", "3D 모델링", "도면화", "간섭 검토"],
+    kv: [
+      { label: "핵심 성과", val: "300+ 파트 간섭 0건" },
+      { label: "CFD 결과", val: "양항비 +3.4% / 항력 -6.3%" },
+      { label: "공차 기준", val: "3D 프린팅 0.2~0.3mm" },
+      { label: "비중", val: "C.G 배치 · 조립성 · 형상 최적화" }
+    ]
+  },
+  {
+    num: "02",
+    title: "가변형 바퀴 로봇 구조 설계",
+    where: "아주대학교 융합캡스톤디자인",
+    desc: "계단·단차를 주행하는 가변형 바퀴 로봇을 직접 설계하고 만들었습니다. LS-DYNA로 충격 취약 구간을 잡아내고, 보강 설계 후 실주행으로 확인했습니다. 최대응력 57% 감소, 성공률 85% 확보.",
+    tags: ["LS-DYNA", "충격·접촉 해석", "3D 프린팅", "구조 보강"],
+    kv: [
+      { label: "최대응력 감소", val: "57%" },
+      { label: "단차 주행 향상", val: "1.15배" },
+      { label: "계단 주행 성공률", val: "85%" },
+      { label: "검증 방식", val: "해석 + 실주행 연계" }
+    ]
+  },
+  {
+    num: "03",
+    title: "자작항공기 설계 및 비행 검증",
+    where: "아주대학교 AFEC 항공 동아리",
+    desc: "2년간 팀장·부팀장으로 총 2기의 자작항공기를 직접 만들고 날려봤습니다. 설계-제작-비행의 반복 사이클을 통해 실패 원인을 분석하고, 결국 10번째 비행에서 안정 비행을 달성했습니다.",
+    tags: ["기체 설계", "실비행 검증", "경량화", "비행 안정성"],
+    kv: [
+      { label: "총 실비행 횟수", val: "12회" },
+      { label: "경량화", val: "1.65kg → 1.30kg (-21%)" },
+      { label: "안정 비행 달성", val: "10번째 시도" },
+      { label: "역할", val: "2023 부팀장 / 2024 팀장" }
+    ]
+  },
+  {
+    num: "04",
+    title: "AGMA 기반 기어·축·베어링 설계",
+    where: "아주대학교 기계설계 프로젝트",
+    desc: "소형 풍력발전기 동력전달계를 AGMA 기준으로 설계했습니다. 기어 강도부터 축 피로, 베어링 수명까지 연계 검토했고, 초기 설계안의 한계를 반영해 전달 효율을 50.2%에서 83%로 끌어올렸습니다.",
+    tags: ["AGMA", "기어 설계", "축 설계", "베어링 선정", "피로 해석"],
+    kv: [
+      { label: "효율 개선", val: "50.2% → 83%" },
+      { label: "검토 기준", val: "AGMA 굽힘·접촉 응력" },
+      { label: "설계 항목", val: "기어 · 축 · 베어링 연계" },
+      { label: "기하 조건", val: "간섭 없음, 접촉률 확보" }
+    ]
+  },
+  {
+    num: "05",
+    title: "에브리봇 R&D 기구개발 인턴십",
+    where: "에브리봇 | 현장실습",
+    desc: "로봇 청소기 프로토타입 60대를 직접 조립하며 조립성·정합·공차 이슈를 정리했습니다. 실측 기반 단차 측정, 센서·배선 연계 검토, 열·모달 해석까지 설계 검증의 시야를 실무 수준으로 넓혔습니다.",
+    tags: ["프로토 조립", "공차 검토", "단차 측정", "모달 해석", "열 검토"],
+    kv: [
+      { label: "조립 수량", val: "1·2차 프로토 총 60대" },
+      { label: "검토 범위", val: "조립성 · 정합 · 열 · 진동" },
+      { label: "추가 학습", val: "모달 해석 기초 자발 학습" },
+      { label: "인턴 유형", val: "현장실습 (R&D 기구개발팀)" }
+    ]
+  }
+];
+
+const grid = document.getElementById('proj-grid');
+projects.forEach((p, i) => {
+  const wrapper = document.createElement('div');
+  const card = document.createElement('div');
+  card.className = 'proj-card';
+  card.innerHTML = `
+    <span class="proj-num">${p.num}</span>
+    <div class="proj-body">
+      <div class="proj-title">${p.title}</div>
+      <div class="proj-where">${p.where}</div>
+      <div class="proj-desc">${p.desc}</div>
+      <div class="proj-tags">${p.tags.map(t => `<span class="proj-tag">${t}</span>`).join('')}</div>
+    </div>
+    <span class="proj-arrow">→</span>
+  `;
+  const detail = document.createElement('div');
+  detail.className = 'detail-panel';
+  detail.innerHTML = `<div class="detail-kv">${p.kv.map(k => `<div class="kv-item"><div class="kv-label">${k.label}</div><div class="kv-val">${k.val}</div></div>`).join('')}</div>`;
+  card.addEventListener('click', () => {
+    const wasOpen = detail.classList.contains('open');
+    document.querySelectorAll('.detail-panel').forEach(d => d.classList.remove('open'));
+    if (!wasOpen) detail.classList.add('open');
+  });
+  wrapper.appendChild(card);
+  wrapper.appendChild(detail);
+  grid.appendChild(wrapper);
+});
+</script>
